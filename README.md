@@ -143,11 +143,31 @@ La estructura del trabajo es:
 
 Los resultados muestran que el hiperparámetro con mayor impacto sobre el desempeño fue `max_depth`.
 
+### Efecto de la profundidad sobre el error
+
 Con profundidades bajas, como `max_depth = 2` o `max_depth = 3`, el modelo presenta valores altos de MSE de test. Esto indica subajuste, ya que los árboles son demasiado simples para capturar la relación entre las variables predictoras y el valor de la vivienda.
 
 Al aumentar `max_depth`, el MSE de test disminuye de forma marcada. Sin embargo, a partir de profundidades altas, como `max_depth = 15`, `20` o `None`, las mejoras se vuelven pequeñas. Por este motivo, una profundidad intermedia como `max_depth = 10` puede interpretarse como un punto de equilibrio razonable entre desempeño y complejidad.
 
+![MSE de entrenamiento y test según profundidad](outputs/figures/MSE_entrenamiento_test.png)
+
+### Efecto de la cantidad de árboles y costo computacional
+
 Por otro lado, `n_estimators` también influye en el modelo, pero de forma más limitada. Aumentar la cantidad de árboles reduce el MSE de test principalmente al comienzo, pero luego aparecen rendimientos decrecientes. Además, el tiempo de entrenamiento aumenta de manera clara a medida que se agregan más árboles.
+
+![MSE de test y tiempo según cantidad de árboles](outputs/figures/arboles_tiempo.png)
+
+### Comparación conjunta entre `max_depth` y `n_estimators`
+
+El siguiente gráfico muestra que la profundidad máxima de los árboles tiene un efecto más fuerte sobre el MSE de test que la cantidad de árboles. Las curvas con profundidades bajas quedan claramente por encima del resto, mientras que las profundidades altas presentan errores menores y muy similares entre sí.
+
+![MSE de test según cantidad de árboles para distintas profundidades](outputs/figures/MSE_cantidad_arboles_distintas_profundidades.png)
+
+### Descomposición sesgo-varianza
+
+La descomposición muestra que, bajo esta estimación empírica, el MSE de test sigue una trayectoria muy similar al sesgo². Esto indica que el principal componente del error está asociado al sesgo del modelo, especialmente cuando la profundidad de los árboles es baja.
+
+![Descomposición sesgo-varianza](outputs/figures/Descomposicion.png)
 
 ---
 
